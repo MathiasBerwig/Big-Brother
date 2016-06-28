@@ -2,23 +2,21 @@ DROP DATABASE IF EXISTS ponto;
 CREATE DATABASE ponto;
 USE ponto;
 
--- TABELA usuario
-DROP TABLE IF EXISTS usuario;
-CREATE TABLE usuario (
+-- TABELA usuarios
+DROP TABLE IF EXISTS usuarios;
+CREATE TABLE usuarios (
  tag VARCHAR(10) NOT NULL,
  nome VARCHAR(64) NOT NULL,
- foto VARCHAR(256) NOT NULL
+ foto VARCHAR(256) NOT NULL,
+ PRIMARY KEY (tag)
 );
 
-ALTER TABLE usuario ADD CONSTRAINT PK_usuario PRIMARY KEY (tag);
-
--- TABELA ponto
-DROP TABLE IF EXISTS ponto;
-CREATE TABLE ponto (
- id_ponto INT NOT NULL,
+-- TABELA registros
+DROP TABLE IF EXISTS registros;
+CREATE TABLE registros (
+ id_registro INT NOT NULL AUTO_INCREMENT,
  tag VARCHAR(10) NOT NULL,
- data_hora TIMESTAMP
+ data_hora TIMESTAMP,
+ PRIMARY KEY (id_registro),
+ FOREIGN KEY (tag) REFERENCES usuarios (tag)
 );
-
-ALTER TABLE ponto ADD CONSTRAINT PK_ponto PRIMARY KEY (id_ponto,tag);
-ALTER TABLE ponto ADD CONSTRAINT FK_ponto FOREIGN KEY (tag) REFERENCES usuario (tag);
