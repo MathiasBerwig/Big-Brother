@@ -45,4 +45,25 @@ $app->post('/registrarPonto', function () use ($app) {
     }
 });
 
+/**
+ * Consulta a tabela REGISTROS e retorna todos os registros de ponto em formato de array.
+ */
+$app->get('/getRegistros', function () use ($app) {
+    $retorno = array();
+    $db = new DbOperation();
+    $result = $db->getRegistros();
+
+    while ($ponto = $result->fetch_assoc()) {
+        $tmp = array();
+        $tmp["id_registro"] = $ponto["id_registro"];
+        $tmp["data_hora"] = $ponto["data_hora"];
+        $tmp["tag"] = $ponto["tag"];
+        $tmp["nome"] = $ponto["nome"];
+        $tmp["foto"] = $ponto["foto"];
+        array_push($retorno, $tmp);
+    }
+
+    echoResponse(200, $retorno);
+});
+
 $app->run();

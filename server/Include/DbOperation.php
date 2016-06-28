@@ -29,4 +29,22 @@ class DbOperation
         $stmt->close();
         return $retorno;
     }
+
+    public function getRegistros()
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT
+              r.id_registro,
+              r.data_hora,
+              u.tag,
+              u.nome,
+              u.foto
+            FROM registros r 
+            JOIN usuarios u 
+            WHERE r.tag = u.tag ORDER BY r.data_hora DESC");
+        $stmt->execute();
+        $registros = $stmt->get_result();
+        $stmt->close();
+        return $registros;
+    }
 }
