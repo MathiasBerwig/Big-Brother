@@ -30,4 +30,19 @@ function echoResponse($status_code, $response)
     }
 }
 
+/**
+ * Insere uma linha na tabela REGISTROS com a TAG informada e o horário do servidor de banco de dados.
+ * Retorna {@code 201} caso a inserção tenha sido realizada com sucesso, do contrário {@code 400}.
+ */
+$app->post('/registrarPonto', function () use ($app) {
+    $tag = $app->request->post('tag');
+    $db = new DbOperation();
+    $retorno = $db->registrarPonto($tag);
+    if ($retorno) {
+        echoResponse(201, null);
+    } else {
+        echoResponse(400, null);
+    }
+});
+
 $app->run();

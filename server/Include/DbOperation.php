@@ -20,4 +20,13 @@ class DbOperation
         $db = new DbConnection();
         $this->conn = $db->connect();
     }
+
+    public function registrarPonto($tag)
+    {
+        $stmt = $this->conn->prepare("INSERT INTO registros (tag) VALUES (?);");
+        $stmt->bind_param('s', $tag);
+        $retorno = $stmt->execute();
+        $stmt->close();
+        return $retorno;
+    }
 }
