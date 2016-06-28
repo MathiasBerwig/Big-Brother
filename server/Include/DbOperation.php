@@ -82,4 +82,23 @@ class DbOperation
         $stmt->close();
         return $this->registroFromRow($registros);
     }
+
+    public function getRegistrosPorTagDataHora($tag, $inicio, $fim)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT
+              r.id_registro,
+              r.data_hora,
+              u.tag,
+              u.nome,
+              u.foto
+             FROM registros r JOIN usuarios u 
+             WHERE r.tag = u.tag AND u.tag = ? AND r.data_hora BETWEEN ? AND ? 
+             ORDER BY r.data_hora DESC");
+        $stmt->bind_param('sss', $tag, $inicio, $fim);
+        $stmt->execute();
+        $registros = $stmt->get_result();
+        $stmt->close();
+        return $this->registroFromRow($registros);
+    }
 }

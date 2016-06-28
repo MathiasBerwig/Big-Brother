@@ -65,4 +65,15 @@ $app->get('/getRegistros/:tag', function ($tag) use ($app) {
     echoResponse(200, $result);
 });
 
+
+/**
+ * Consulta a tabela de REGISTROS e retorna todos os registros de ponto com a {@code tag} entre a data e hora de
+ * {@code inicio} e {@code fim}.
+ */
+$app->get('/getRegistros/:tag/:inicio/:fim', function ($tag, $inicio, $fim) use ($app) {
+    $db = new DbOperation();
+    $result = $db->getRegistrosPorTagDataHora($tag, $inicio, $fim);
+    echoResponse(200, $result);
+});
+
 $app->run();
