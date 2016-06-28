@@ -1,0 +1,24 @@
+DROP DATABASE IF EXISTS ponto;
+CREATE DATABASE ponto;
+USE ponto;
+
+-- TABELA usuario
+DROP TABLE IF EXISTS usuario;
+CREATE TABLE usuario (
+ tag VARCHAR(10) NOT NULL,
+ nome VARCHAR(64) NOT NULL,
+ foto VARCHAR(256) NOT NULL
+);
+
+ALTER TABLE usuario ADD CONSTRAINT PK_usuario PRIMARY KEY (tag);
+
+-- TABELA ponto
+DROP TABLE IF EXISTS ponto;
+CREATE TABLE ponto (
+ id_ponto INT NOT NULL,
+ tag VARCHAR(10) NOT NULL,
+ data_hora TIMESTAMP
+);
+
+ALTER TABLE ponto ADD CONSTRAINT PK_ponto PRIMARY KEY (id_ponto,tag);
+ALTER TABLE ponto ADD CONSTRAINT FK_ponto FOREIGN KEY (tag) REFERENCES usuario (tag);
