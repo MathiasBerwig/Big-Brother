@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Big Brother</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_nome">Mathias Berwig</string>
+    <string name="placeholder_data_hora">28/06/2016 – 17:06</string>
 </resources>

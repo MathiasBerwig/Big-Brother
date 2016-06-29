@@ -1,7 +1,9 @@
-package io.github.mathiasberwig.bigbrother;
+package io.github.mathiasberwig.bigbrother.presentation.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import io.github.mathiasberwig.bigbrother.R;
 
 public class MainActivity extends AppCompatActivity {
 

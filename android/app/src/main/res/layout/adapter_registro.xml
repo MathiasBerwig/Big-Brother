@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Card View -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="2dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:contentPadding="0dp"
+        android:layout_gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Foto -->
+            <ImageView
+                android:id="@+id/civAvatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp" />
+
+            <!-- Nome -->
+            <TextView
+                android:id="@+id/tvNome"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/civAvatar"
+                android:layout_toEndOf="@+id/civAvatar"
+                android:layout_toRightOf="@+id/civAvatar"
+                tools:text="@string/placeholder_nome"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"/>
+
+            <!-- Data - Hora -->
+            <TextView
+                android:id="@+id/tvDataHora"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                tools:text="@string/placeholder_data_hora"
+                android:layout_below="@+id/tvNome"
+                android:layout_toRightOf="@+id/civAvatar"
+                android:layout_toEndOf="@id/civAvatar"
+                android:layout_marginRight="8dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>
