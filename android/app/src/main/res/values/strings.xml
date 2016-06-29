@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Big Brother</string>
 
+    <!-- Erros -->
+    <string name="erro_consultar_registros">Falha ao consultar web server</string>
+    <string name="erro_resposta_vazia">Sua busca não retornou resultados</string>
+
     <!-- Placeholders -->
     <string name="placeholder_nome">Mathias Berwig</string>
     <string name="placeholder_data_hora">28/06/2016 – 17:06</string>
