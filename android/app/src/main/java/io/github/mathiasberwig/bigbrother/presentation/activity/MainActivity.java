@@ -1,13 +1,18 @@
 package io.github.mathiasberwig.bigbrother.presentation.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,6 +21,7 @@ import java.util.Arrays;
 
 import io.github.mathiasberwig.bigbrother.R;
 import io.github.mathiasberwig.bigbrother.data.model.Registro;
+import io.github.mathiasberwig.bigbrother.data.model.Usuario;
 import io.github.mathiasberwig.bigbrother.data.remote.RDAO;
 import io.github.mathiasberwig.bigbrother.presentation.adapter.RegistrosAdapter;
 
@@ -26,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvEmptyState;
     private RegistrosAdapter registrosAdapter;
 
+    private Usuario[] usuarios;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +42,49 @@ public class MainActivity extends AppCompatActivity {
         localizarViews();
         prepararRecyclerView();
         consultarRegistros();
+        consultarUsuarios();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            // Filtrar pessoas
+            case R.id.action_filtrar_pessoa: {
+                // Verifica se os usuários foram baixados do WS
+                if (usuarios == null) {
+                    Toast.makeText(MainActivity.this, R.string.erro_consultar_usuarios, Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
+                // Prepara a lista de nomes
+                final String[] nomes = Arrays.copyOf(Usuario.getNomes(usuarios), usuarios.length + 1);
+                nomes[usuarios.length] = getString(R.string.item_mostrar_todos);
+
+                // Mostra o diálogo com a lista
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(R.string.titulo_filtrar_pessoa)
+                        .setSingleChoiceItems(nomes, -1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == nomes.length - 1) consultarRegistros();
+                                else consultarRegistros(usuarios[which]);
+                                dialog.dismiss();
+                            }
+                        }).show();
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void prepararRecyclerView() {
@@ -69,24 +120,57 @@ public class MainActivity extends AppCompatActivity {
 
     private void consultarRegistros() {
         RDAO.getInstance(this).getRegistros(
-                new Response.Listener<Registro[]>() {
-                    @Override
-                    public void onResponse(Registro[] response) {
-                        if (response.length > 0) {
-                            atualizarAdapter(response);
-                            mostrarRecyclerView();
-                        } else {
-                            mostrarEmptyState(R.string.erro_resposta_vazia);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mostrarEmptyState(R.string.erro_consultar_registros);
-                        Log.e(TAG, "consultarRegistros: " + error.getMessage(), error);
-                    }
-                }
+                registrosResponseListener,
+                registrosErrorListener
         );
     }
+
+    private void consultarRegistros(Usuario usuario) {
+        RDAO.getInstance(this).getRegistros(
+                usuario.getTag(),
+                registrosResponseListener,
+                registrosErrorListener
+        );
+    }
+
+    private void consultarUsuarios() {
+        RDAO.getInstance(this).getUsuarios(
+                usuariosResponseListener,
+                usuariosErrorListener
+        );
+    }
+
+    private Response.Listener<Registro[]> registrosResponseListener = new Response.Listener<Registro[]>() {
+        @Override
+        public void onResponse(Registro[] response) {
+            if (response.length > 0) {
+                atualizarAdapter(response);
+                mostrarRecyclerView();
+            } else {
+                mostrarEmptyState(R.string.erro_resposta_vazia);
+            }
+        }
+    };
+
+    private Response.ErrorListener registrosErrorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            mostrarEmptyState(R.string.erro_consultar_registros);
+            Log.e(TAG, "consultarRegistros: não foi possível consultar a lista de registros.", error);
+        }
+    };
+
+    private Response.Listener<Usuario[]> usuariosResponseListener = new Response.Listener<Usuario[]>() {
+        @Override
+        public void onResponse(Usuario[] response) {
+            usuarios = response;
+        }
+    };
+
+    private Response.ErrorListener usuariosErrorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e(TAG, "consultarUsuarios: não foi possível baixar a lista de usuários.", error);
+        }
+    };
 }

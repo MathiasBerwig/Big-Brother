@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">Big Brother</string>
 
+    <!-- Ações do Menu -->
+    <string name="action_filtrar_data">Alterar período</string>
+    <string name="action_filtrar_pessoa">Alterar pessoa</string>
+    <string name="action_atualizar">Atualizar</string>
+
+    <!-- Diálogos de Filtro -->
+    <string name="titulo_filtrar_pessoa">Filtrar pessoas</string>
+    <string name="item_mostrar_todos">Mostrar todos</string>
+
     <!-- Erros -->
     <string name="erro_consultar_registros">Falha ao consultar web server</string>
     <string name="erro_resposta_vazia">Sua busca não retornou resultados</string>
+    <string name="erro_consultar_usuarios">Não foi possível consultar a lista de usuários. Atualize e tente novamente.</string>
 
     <!-- Placeholders -->
     <string name="placeholder_nome">Mathias Berwig</string>

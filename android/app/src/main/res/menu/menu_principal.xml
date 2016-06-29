@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Atualizar -->
+    <item
+        android:id="@+id/action_atualizar"
+        android:title="@string/action_atualizar"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        app:showAsAction="ifRoom" />
+
+    <!-- Selecionar Pessoa -->
+    <item
+        android:id="@+id/action_filtrar_pessoa"
+        android:title="@string/action_filtrar_pessoa"
+        android:icon="@drawable/ic_person_white_24dp"
+        app:showAsAction="ifRoom" />
+
+    <!-- Selecionar Período -->
+    <item
+        android:id="@+id/action_filtrar_data"
+        android:title="@string/action_filtrar_data"
+        android:icon="@drawable/ic_date_range_white_24dp"
+        app:showAsAction="ifRoom" />
+
+</menu>
