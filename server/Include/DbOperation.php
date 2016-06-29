@@ -21,7 +21,7 @@ class DbOperation
         $this->conn = $db->connect();
     }
 
-    function registroFromRow($query)
+    function registrosFromQuery($query)
     {
         $result = array();
 
@@ -32,6 +32,20 @@ class DbOperation
             $tmp["tag"] = $ponto["tag"];
             $tmp["nome"] = $ponto["nome"];
             $tmp["foto"] = $ponto["foto"];
+            array_push($result, $tmp);
+        }
+        return $result;
+    }
+
+    function usuariosFromQuery($query)
+    {
+        $result = array();
+
+        while ($usuario = $query->fetch_assoc()) {
+            $tmp = array();
+            $tmp["tag"] = $usuario["tag"];
+            $tmp["nome"] = $usuario["nome"];
+            $tmp["foto"] = $usuario["foto"];
             array_push($result, $tmp);
         }
         return $result;
@@ -61,7 +75,7 @@ class DbOperation
         $stmt->execute();
         $registros = $stmt->get_result();
         $stmt->close();
-        return $this->registroFromRow($registros);
+        return $this->registrosFromQuery($registros);
     }
 
     public function getRegistrosPorTag($tag)
@@ -80,7 +94,7 @@ class DbOperation
         $stmt->execute();
         $registros = $stmt->get_result();
         $stmt->close();
-        return $this->registroFromRow($registros);
+        return $this->registrosFromQuery($registros);
     }
 
     public function getRegistrosPorTagDataHora($tag, $inicio, $fim)
@@ -99,6 +113,15 @@ class DbOperation
         $stmt->execute();
         $registros = $stmt->get_result();
         $stmt->close();
-        return $this->registroFromRow($registros);
+        return $this->registrosFromQuery($registros);
+    }
+
+    public function getUsuarios()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM usuarios;");
+        $stmt->execute();
+        $registros = $stmt->get_result();
+        $stmt->close();
+        return $this->usuariosFromQuery($registros);
     }
 }

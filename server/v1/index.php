@@ -65,6 +65,16 @@ $app->get('/getRegistros/:tag', function ($tag) use ($app) {
     echoResponse(200, $result);
 });
 
+/**
+ * Consulta a tabela USUARIOS e retorna todos os usuários cadastrados.
+ */
+$app->get('/getUsuarios', function () use ($app) {
+
+    $db = new DbOperation();
+    $result = $db->getUsuarios();
+    echoResponse(200, $result);
+});
+
 
 /**
  * Consulta a tabela de REGISTROS e retorna todos os registros de ponto com a {@code tag} entre a data e hora de
