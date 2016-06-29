@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.github.mathiasberwig.bigbrother.R;
 import io.github.mathiasberwig.bigbrother.data.model.Registro;
@@ -19,9 +19,9 @@ import io.github.mathiasberwig.bigbrother.data.model.Registro;
 public class RegistrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private AppCompatActivity activity;
-    private ArrayList<Registro> registros;
+    private List<Registro> registros;
 
-    public RegistrosAdapter(AppCompatActivity activity, @NonNull ArrayList<Registro> registros) {
+    public RegistrosAdapter(AppCompatActivity activity, @NonNull List<Registro> registros) {
         this.activity = activity;
         this.registros = registros;
     }
@@ -41,6 +41,7 @@ public class RegistrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         // Carrega a imagem de modo assíncrono usando o Glide
         Glide.with(activity)
                 .load(registros.get(pos).getFoto())
+                .centerCrop()
                 .placeholder(R.drawable.ic_person_white_48dp)
                 .into(((RegistroViewHolder) h).imgAvatar);
     }
@@ -48,6 +49,11 @@ public class RegistrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemCount() {
         return registros.size();
+    }
+
+    public void setRegistros(List<Registro> registros) {
+        this.registros = registros;
+        notifyDataSetChanged();
     }
 
     public static class RegistroViewHolder extends RecyclerView.ViewHolder {
