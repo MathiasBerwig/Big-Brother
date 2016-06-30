@@ -20,6 +20,7 @@ public class RDAO {
     private static final String TEMPLATE_URL_GET_REGISTROS = "%s/getRegistros";
     private static final String TEMPLATE_URL_GET_REGISTROS_TAG = "%s/getRegistros/%s";
     private static final String TEMPLATE_URL_GET_REGISTROS_TAG_DT_HR = "%s/getRegistros/%s/%s/%s";
+    private static final String TEMPLATE_URL_GET_REGISTROS_DT_HR = "%s/getRegistros/%s/%s";
     private static final String TEMPLATE_URL_GET_USUARIOS = "%s/getUsuarios";
 
     private static final SimpleDateFormat SERVER_DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd+HH:mm:ss", Locale.getDefault());
@@ -58,6 +59,15 @@ public class RDAO {
         String fim = SERVER_DATETIME_FORMAT.format(dataFim);
         final String URL = String.format(TEMPLATE_URL_GET_REGISTROS_TAG_DT_HR, URL_SERVIDOR, tag,
                 inicio, fim);
+        requestQueue.add(new GsonRequest<>(URL, Registro[].class, null, listener, errorListener));
+    }
+
+    public void getRegistros(Date dataInicio, Date dataFim,
+                             Response.Listener<Registro[]> listener,
+                             Response.ErrorListener errorListener) {
+        String inicio = SERVER_DATETIME_FORMAT.format(dataInicio);
+        String fim = SERVER_DATETIME_FORMAT.format(dataFim);
+        final String URL = String.format(TEMPLATE_URL_GET_REGISTROS_DT_HR, URL_SERVIDOR, inicio, fim);
         requestQueue.add(new GsonRequest<>(URL, Registro[].class, null, listener, errorListener));
     }
 

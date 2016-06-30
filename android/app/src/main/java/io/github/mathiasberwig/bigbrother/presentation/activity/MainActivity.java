@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import io.github.mathiasberwig.bigbrother.R;
 import io.github.mathiasberwig.bigbrother.data.model.Registro;
@@ -82,6 +85,29 @@ public class MainActivity extends AppCompatActivity {
                         }).show();
                 break;
             }
+
+            // Filtrar datas
+            case R.id.action_filtrar_data: {
+                final Calendar calen = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
+
+                                final Calendar dataInicio = Calendar.getInstance();
+                                dataInicio.set(year, monthOfYear, dayOfMonth);
+
+                                final Calendar dataFim = Calendar.getInstance();
+                                dataFim.set(yearEnd, monthOfYearEnd, dayOfMonthEnd);
+
+                                consultarRegistros(dataInicio.getTime(), dataFim.getTime());
+                            }
+                        },
+                        calen.get(Calendar.YEAR),
+                        calen.get(Calendar.MONTH),
+                        calen.get(Calendar.DAY_OF_MONTH));
+                dpd.show(getFragmentManager(), null);
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -133,6 +159,15 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    private void consultarRegistros(Date dataInicio, Date dataFim) {
+        RDAO.getInstance(this).getRegistros(
+                dataInicio,
+                dataFim,
+                registrosResponseListener,
+                registrosErrorListener
+        );
+    }
+
     private void consultarUsuarios() {
         RDAO.getInstance(this).getUsuarios(
                 usuariosResponseListener,
@@ -143,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
     private Response.Listener<Registro[]> registrosResponseListener = new Response.Listener<Registro[]>() {
         @Override
         public void onResponse(Registro[] response) {
-            if (response.length > 0) {
+            if (response != null && response.length > 0) {
                 atualizarAdapter(response);
                 mostrarRecyclerView();
             } else {
