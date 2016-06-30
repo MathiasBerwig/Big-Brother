@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Usuario[] usuarios;
 
+    private enum Consulta {getRegistros, getRegistrosPorData, getRegistrosPorTag};
+    private Consulta ultimaConsulta;
+
+    private Usuario ultimoUsuario;
+    private Date ultimaDataInicio, ultimaDataFim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         }).show();
-                break;
+                return true;
             }
 
             // Filtrar datas
@@ -107,6 +113,16 @@ public class MainActivity extends AppCompatActivity {
                         calen.get(Calendar.MONTH),
                         calen.get(Calendar.DAY_OF_MONTH));
                 dpd.show(getFragmentManager(), null);
+                return true;
+            }
+            // Atualizar dados
+            case R.id.action_atualizar: {
+                switch (ultimaConsulta) {
+                    case getRegistros: consultarRegistros(); break;
+                    case getRegistrosPorTag: consultarRegistros(ultimoUsuario); break;
+                    case getRegistrosPorData: consultarRegistros(ultimaDataInicio, ultimaDataFim); break;
+                }
+                return true;
             }
         }
 
@@ -145,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void consultarRegistros() {
+        ultimaConsulta = Consulta.getRegistros;
         RDAO.getInstance(this).getRegistros(
                 registrosResponseListener,
                 registrosErrorListener
@@ -152,6 +169,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void consultarRegistros(Usuario usuario) {
+        ultimaConsulta = Consulta.getRegistrosPorTag;
+        ultimoUsuario = usuario;
+
         RDAO.getInstance(this).getRegistros(
                 usuario.getTag(),
                 registrosResponseListener,
@@ -160,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void consultarRegistros(Date dataInicio, Date dataFim) {
+        ultimaConsulta = Consulta.getRegistrosPorData;
+        ultimaDataInicio = dataInicio;
+        ultimaDataFim = dataFim;
+
         RDAO.getInstance(this).getRegistros(
                 dataInicio,
                 dataFim,
