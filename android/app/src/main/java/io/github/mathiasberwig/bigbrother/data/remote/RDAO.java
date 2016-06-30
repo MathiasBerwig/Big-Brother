@@ -16,7 +16,8 @@ import io.github.mathiasberwig.bigbrother.data.model.Usuario;
 public class RDAO {
     private static final String TAG = "RDAO";
 
-    private static final String URL_SERVIDOR = "http://192.168.10.149/server/v1";
+    // TODO: Definir endereço do servidor
+    private static final String URL_SERVIDOR = "";
     private static final String TEMPLATE_URL_GET_REGISTROS = "%s/getRegistros";
     private static final String TEMPLATE_URL_GET_REGISTROS_TAG = "%s/getRegistros/%s";
     private static final String TEMPLATE_URL_GET_REGISTROS_TAG_DT_HR = "%s/getRegistros/%s/%s/%s";
