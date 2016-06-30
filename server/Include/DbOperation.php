@@ -116,6 +116,25 @@ class DbOperation
         return $this->registrosFromQuery($registros);
     }
 
+    public function getRegistrosPorDataHora($inicio, $fim)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT
+              r.id_registro,
+              r.data_hora,
+              u.tag,
+              u.nome,
+              u.foto
+             FROM registros r JOIN usuarios u 
+             WHERE r.tag = u.tag AND r.data_hora BETWEEN ? AND ? 
+             ORDER BY r.data_hora DESC");
+        $stmt->bind_param('ss', $inicio, $fim);
+        $stmt->execute();
+        $registros = $stmt->get_result();
+        $stmt->close();
+        return $this->registrosFromQuery($registros);
+    }
+
     public function getUsuarios()
     {
         $stmt = $this->conn->prepare("SELECT * FROM usuarios;");
