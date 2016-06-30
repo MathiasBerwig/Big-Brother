@@ -42,7 +42,7 @@ public class RegistrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Glide.with(activity)
                 .load(registros.get(pos).getFoto())
                 .centerCrop()
-                .placeholder(R.drawable.ic_person_white_48dp)
+                .placeholder(R.drawable.ic_person_black_48dp)
                 .into(((RegistroViewHolder) h).imgAvatar);
     }
 
