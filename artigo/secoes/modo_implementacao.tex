@@ -1,0 +1,9 @@
+\section{Modo de Implementação}
+
+Para atender os requisitos solicitados pela universidade, o sistema será desenvolvido em 3 módulos, sendo eles: unidade Arduino, servidor e aplicativo Android. Estes módulos podem funcionar de modo interligado, exigindo conexão permanente entre os dispositivos.
+
+O módulo Arduino será composto pelos Arduinos Uno e Mega, que serão responsáveis por interligar o sensor RFID e os LEDs indicadores. Quando o usuário passar seu cartão junto ao leitor, o Arduino Uno deve ler a TAG do cartão, envia-la para o Arduino Mega e este fazer o registro junto ao servidor. Para indicar se o ponto foi registrado corretamente o LED verde ficará aceso por 1 segundo, do contrário, o vermelho ligará pelo mesmo período de tempo.
+
+O módulo servidor será responsável por gerenciar as informações relacionadas ao controle de ponto e usuário. Ele ficará instalado em um computador conectado à internet com um serviço de banco de dados e outro de web. Estes atenderão as requisições do Arduino Mega e do Android.
+
+O aplicativo Android será capaz de exibir as informações consultadas no servidor. Para isso, ele deve possuir uma tela com a listagem de registros de ponto, com opções para filtrar por pessoa ou período (data de início e data de fim).

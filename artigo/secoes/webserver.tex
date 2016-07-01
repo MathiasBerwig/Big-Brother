@@ -1,0 +1,21 @@
+\section{Servidor Web}
+
+O servidor web é responsável por atender as solicitações de registro de ponto do Arduino e consulta do Android. Para isso, a tecnologia empregada no desenvolvimento do web server foi o Apache, uma plataforma de servidor gratuita e de código aberta. 
+
+Para atender os requisitos mínimos da aplicação forma necessários apenas três métodos com algumas variações, totalizando cinco rotinas diferentes. A tabela ~\ref{ws_tabela_metodos} demonstra esses métodos e os respectivos retornos.
+
+\begin{table}[H]
+\caption{Métodos suportados pelo servidor web.}
+\label{ws_tabela_metodos}
+\begin{tabularx}{\textwidth}{|c|c|c|X|}
+\hline
+\textbf{Nome do Método} & \textbf{Requisição Suportada} & \textbf{Parâmetros} & \multicolumn{1}{c|}{\textbf{Retorno}} \\ \hline
+registrarPonto & POST & tag & HTTP Code: 201 (sucesso) ou 400 (falha). \\ \hline
+getUsuarios & GET & - & Todos os usuários cadastrados. \\ \hline
+getRegistros & GET & - & Todos os registros de ponto. \\ \hline
+getRegistros & GET & tag & Todos os registros de ponto para a tag informada. \\ \hline
+getRegistros & GET & dataInicio, dataFim & Todos os registros de ponto entre a data e hora informados. \\ \hline
+\end{tabularx}
+\end{table}
+
+Os métodos do tipo \textit{GET} realizam uma consulta no banco de dados, filtrando os resultados de acordo com os parâmetros informados e então retornam as informações em formato \textit{JSON}. O método \textit{registrarPonto} é responsável por realizar uma operação de inserção no banco de dados, e seu retorno é em formato de código HTTP. Caso a inserção tenha sido realizada com sucesso, o mesmo retorna o código 201. Do contrário, 400.

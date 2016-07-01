@@ -1,0 +1,26 @@
+Cartão Ponto por RFID
+
+Problema: 
+A partir de analises/observações do cotidiano dos bolsistas de uma universidade, constatou-se que a rotina diária da chegada a universidade para a realização das atividades pertencente a
+bolsa, acontece de forma singular para cada indivíduo, desta forma dificultado o controle das horas semanais que cada um deve cumprir. E para tal controle a universidade não quer mais utilizar a tradicional ficha ponto.
+
+Proposta:
+Com base no estudo do problema, propõe-se que seja utilizado RFID para facilitar a dinâmica institucional e auxiliar na geração do relatório de presenças. Para que seja implementado o uso do RFID, a universidade disponibiliza os seguintes recursos: 
+- Um Kit Modulo leitor RFID, composto por duas TAGs (cartão e chaveiro);
+- Um arduino UNO;
+- Um arduino MEGA;
+- Ethernet Shield;
+- Protoboard.
+
+Resultados esperados:
+Um protótipo funcional que realize o controle efetivo do ponto através dos recursos disponibilizados, apresentado as seguintes funcionalidades:
+- Leitura das TAGs;
+- Comunicação Serial entre os arduinos;
+- Comunicação com servidor com o envio do momento da ativação de uma TAG; (pode ser utilizado o twitter como servidor de recepção dos dados).
+- (opcional) – desenvolvimento de um servidor/serviço para gerenciamento do ponto.
+
+Para a atividade de 50 pontos os seguintes critérios devem ser atingidos:
+- (30 pontos) - Um relatório no formato ABNT e deve abordar:
+  - Descrição do código (código comentado);
+  - Descrição e imagens do protótipo físico.
+- (20 pontos) - Apresentação do protótipo como um todo.
